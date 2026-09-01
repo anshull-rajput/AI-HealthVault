@@ -20,7 +20,7 @@ if not api_key:
     st.stop()
 
 client = Groq(api_key=api_key)
-model = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
+model = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 
 
 def extract_text(uploaded_file):
@@ -68,8 +68,6 @@ if uploaded_file:
         st.stop()
 
     st.success(f"Report loaded: {uploaded_file.name}")
-
-    # Keep the prompt manageable for a small, fast prototype.
     report_for_ai = report_text[:18000]
 
     if "summary" not in st.session_state:

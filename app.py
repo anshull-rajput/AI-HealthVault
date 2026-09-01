@@ -20,7 +20,7 @@ if not api_key:
     st.stop()
 
 client = Groq(api_key=api_key)
-model = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
+model = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 
 
 def extract_text(uploaded_file):

@@ -19,7 +19,8 @@ if not api_key:
     st.warning("Groq API key not found. Add GROQ_API_KEY to your .env file and restart the app.")
     st.stop()
 
-client = Groq(api_key=api_key)
+# Groq API client. The longer timeout helps with larger medical reports.
+client = Groq(api_key=api_key, timeout=120.0, max_retries=2)
 model = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 
 
@@ -48,7 +49,7 @@ def ask_ai(prompt):
             {"role": "user", "content": prompt},
         ],
         temperature=0.2,
-        max_tokens=1200,
+        max_tokens=800,
     )
     return response.choices[0].message.content
 
@@ -68,7 +69,8 @@ if uploaded_file:
         st.stop()
 
     st.success(f"Report loaded: {uploaded_file.name}")
-    report_for_ai = report_text[:18000]
+    # Keep prompts compact so Groq responds faster and reliably.
+    report_for_ai = report_text[:9000]
 
     if "summary" not in st.session_state:
         st.session_state.summary = ""
@@ -85,7 +87,7 @@ Read the following medical report and create a simple patient-friendly summary.
 Return exactly these sections:
 1. Report overview
 2. Key findings
-3. Values that appear outside the provided reference range (only if explicitly shown)
+3. Values outside the provided reference range (only if explicitly shown)
 4. Questions the patient may ask their doctor
 
 Do not invent values or diagnoses.

@@ -38,7 +38,6 @@ pip install -r requirements.txt
 Create a `.env` file:
 
 ```text
-GROQ_API_KEY=your_api_key_here
 ```
 
 Run from the project root:

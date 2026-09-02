@@ -15,9 +15,88 @@ from backend.ai_service import HealthVaultAI
 from backend.report_store import available_tests, compare_test, extract_lab_values
 
 st.set_page_config(page_title="AI HealthVault", page_icon="🏥", layout="wide")
-st.title("🏥 AI HealthVault")
-st.write("Understand your medical report with a simple Generative AI assistant.")
-st.caption("Educational prototype — not a medical diagnosis tool.")
+
+# Clean, professional UI styling while keeping Streamlit simple and responsive.
+st.markdown("""
+<style>
+    .block-container {
+        max-width: 1100px;
+        padding-top: 2.5rem;
+        padding-bottom: 3rem;
+    }
+    .hv-header {
+        padding: 1.4rem 1.5rem;
+        border: 1px solid #dbe4ee;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #ffffff 0%, #f1f7f8 100%);
+        margin-bottom: 1.5rem;
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+    }
+    .hv-title {
+        font-size: 2.25rem;
+        font-weight: 750;
+        color: #0f172a;
+        margin: 0;
+        letter-spacing: -0.03em;
+    }
+    .hv-subtitle {
+        color: #475569;
+        font-size: 1rem;
+        margin: .35rem 0 .75rem 0;
+    }
+    .hv-badge {
+        display: inline-block;
+        padding: .3rem .7rem;
+        border-radius: 999px;
+        background: #e6f4f1;
+        color: #0f766e;
+        font-size: .78rem;
+        font-weight: 650;
+    }
+    div[data-testid="stFileUploader"] {
+        border: 1px dashed #94a3b8;
+        border-radius: 14px;
+        padding: .4rem;
+        background: #ffffff;
+    }
+    div.stButton > button {
+        border-radius: 10px;
+        min-height: 2.7rem;
+        font-weight: 600;
+        border: 1px solid #cbd5e1;
+        transition: all .15s ease;
+    }
+    div.stButton > button:hover {
+        border-color: #0f766e;
+        transform: translateY(-1px);
+    }
+    div[data-testid="stMetric"] {
+        border: 1px solid #dbe4ee;
+        border-radius: 14px;
+        padding: .8rem;
+        background: #ffffff;
+    }
+    div[data-testid="stDataFrame"] {
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    div[data-testid="stAlert"] {
+        border-radius: 12px;
+    }
+    h2, h3 {
+        color: #0f172a;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div class="hv-header">
+    <div class="hv-title">🏥 AI HealthVault</div>
+    <div class="hv-subtitle">Understand your medical reports with a simple Generative AI assistant.</div>
+    <span class="hv-badge">AI-powered • Privacy-focused • Educational</span>
+</div>
+""", unsafe_allow_html=True)
 
 # Session-only history. Never use a database, file, or server-side storage here.
 SESSION_KEY = "healthvault_saved_reports_v3"
@@ -49,7 +128,14 @@ def make_session_report(original_filename, report_name, report_date, lab_values)
 
 
 st.subheader("📄 Upload & understand")
-uploaded_file = st.file_uploader("Upload a medical report (PDF)", type=["pdf"])
+col_upload, col_info = st.columns([2.4, 1], vertical_alignment="center")
+with col_upload:
+    uploaded_file = st.file_uploader("Upload a medical report (PDF)", type=["pdf"])
+with col_info:
+    st.caption("Supported format")
+    st.markdown("**PDF**")
+    st.caption("Your saved history stays in the current browser session.")
+
 st.divider()
 history_tab = st.container()
 
@@ -156,8 +242,6 @@ with history_tab:
     st.subheader("Your saved reports")
     st.caption("This history belongs only to your current browser session. No PDF, report text, or history is saved to the server; it clears when the session ends.")
 
-    # Work directly with Streamlit session state. This avoids any dependency on
-    # a server-side report store and keeps the privacy boundary explicit.
     saved_reports = sorted(
         list(st.session_state[SESSION_KEY]),
         key=lambda report: (str(report.get("report_date", "")), str(report.get("created_at", ""))),

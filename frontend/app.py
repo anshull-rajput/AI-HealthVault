@@ -1,5 +1,7 @@
 import sys
 from pathlib import Path
+from datetime import datetime
+import uuid
 
 import streamlit as st
 from dotenv import load_dotenv
@@ -10,16 +12,16 @@ sys.path.insert(0, str(ROOT))
 load_dotenv(ROOT / ".env")
 
 from backend.ai_service import HealthVaultAI
-from backend.report_store import available_tests, compare_test, extract_lab_values, list_reports, save_report
+from backend.report_store import available_tests, compare_test, extract_lab_values
 
 st.set_page_config(page_title="AI HealthVault", page_icon="🏥", layout="wide")
 st.title("🏥 AI HealthVault")
 st.write("Understand your medical report with a simple Generative AI assistant.")
 st.caption("Educational prototype — not a medical diagnosis tool.")
 
-# Session-only history: each browser session gets its own private list.
-SESSION_KEY = "healthvault_saved_reports_v2"
-if SESSION_KEY not in st.session_state:
+# Session-only history. Never use a database, file, or server-side storage here.
+SESSION_KEY = "healthvault_saved_reports_v3"
+if SESSION_KEY not in st.session_state or not isinstance(st.session_state.get(SESSION_KEY), list):
     st.session_state[SESSION_KEY] = []
 
 try:
@@ -32,6 +34,18 @@ except ValueError:
 def extract_text(uploaded_file):
     reader = PdfReader(uploaded_file)
     return "\n".join((page.extract_text() or "") for page in reader.pages).strip()
+
+
+def make_session_report(original_filename, report_name, report_date, lab_values):
+    """Create an in-memory report record. Nothing is written to disk/server."""
+    return {
+        "id": str(uuid.uuid4()),
+        "report_name": report_name.strip(),
+        "report_date": report_date.isoformat(),
+        "original_filename": original_filename,
+        "lab_values": lab_values,
+        "created_at": datetime.now().isoformat(timespec="seconds"),
+    }
 
 
 st.subheader("📄 Upload & understand")
@@ -69,14 +83,12 @@ if uploaded_file:
         )
     else:
         st.info("No clear numeric lab values were detected. You can still add this report's name and date to this session's history.")
+
     if st.button("💾 Save to this session", use_container_width=True):
         if report_name.strip():
-            try:
-                session_report = save_report(uploaded_file.name, report_name, report_date, extracted_values)
-                st.session_state[SESSION_KEY].append(session_report)
-                st.success("Saved only for this browser session. Scroll to Your saved reports to compare it later.")
-            except Exception as exc:
-                st.error(f"Could not save this report: {exc}")
+            session_report = make_session_report(uploaded_file.name, report_name, report_date, extracted_values)
+            st.session_state[SESSION_KEY].append(session_report)
+            st.success("Saved only for this browser session. Scroll to Your saved reports to compare it later.")
         else:
             st.error("Please enter a report name.")
 
@@ -143,13 +155,20 @@ REPORT:\n{report}"""
 with history_tab:
     st.subheader("Your saved reports")
     st.caption("This history belongs only to your current browser session. No PDF, report text, or history is saved to the server; it clears when the session ends.")
-    saved_reports = list_reports(st.session_state[SESSION_KEY])
+
+    # Work directly with Streamlit session state. This avoids any dependency on
+    # a server-side report store and keeps the privacy boundary explicit.
+    saved_reports = sorted(
+        list(st.session_state[SESSION_KEY]),
+        key=lambda report: (str(report.get("report_date", "")), str(report.get("created_at", ""))),
+    )
+
     if not saved_reports:
         st.info("No reports saved yet. Upload a PDF above, add a name and date, then save it.")
     else:
         st.dataframe(
             [
-                {"Date": report["report_date"], "Name": report["report_name"], "File": report["original_filename"], "Detected values": len(report["lab_values"])}
+                {"Date": report.get("report_date", ""), "Name": report.get("report_name", ""), "File": report.get("original_filename", ""), "Detected values": len(report.get("lab_values", []))}
                 for report in saved_reports
             ],
             use_container_width=True,
@@ -180,4 +199,5 @@ Do not diagnose, say whether it is normal/abnormal without a shown reference ran
                                 st.error(f"Groq request failed: {exc}")
         else:
             st.info("The saved PDFs do not contain clearly detected numeric lab values to compare yet.")
+
     st.info("⚠️ This history feature is educational and not a diagnosis or treatment plan. Ask a qualified healthcare professional to interpret trends, especially if results change or you have symptoms.")

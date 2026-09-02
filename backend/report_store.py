@@ -1,41 +1,14 @@
-"""Small local persistence layer for saved medical reports.
+"""Session-only helpers for report history and lab-value comparison.
 
-The app deliberately keeps reports on the computer running Streamlit.  SQLite
-is included with Python, so this remains easy to explain and deploy in a demo.
+This module deliberately does not write PDFs, report text, or report history to
+disk. The Streamlit app keeps the returned report records in ``st.session_state``
+so a browser session can compare its own reports without exposing them to other
+visitors of a deployed app.
 """
 
-import json
 import re
-import shutil
-import sqlite3
 import uuid
 from datetime import date, datetime
-from pathlib import Path
-
-
-DATA_DIR = Path(__file__).resolve().parents[1] / "data"
-REPORT_DIR = DATA_DIR / "reports"
-DATABASE_PATH = DATA_DIR / "healthvault.db"
-
-
-def _connection():
-    DATA_DIR.mkdir(exist_ok=True)
-    REPORT_DIR.mkdir(exist_ok=True)
-    connection = sqlite3.connect(DATABASE_PATH)
-    connection.row_factory = sqlite3.Row
-    connection.execute(
-        """CREATE TABLE IF NOT EXISTS reports (
-        id TEXT PRIMARY KEY,
-        report_name TEXT NOT NULL,
-        report_date TEXT NOT NULL,
-        original_filename TEXT NOT NULL,
-        saved_path TEXT NOT NULL,
-        extracted_text TEXT NOT NULL,
-        lab_values TEXT NOT NULL,
-        created_at TEXT NOT NULL
-        )"""
-    )
-    return connection
 
 
 def extract_lab_values(report_text):
@@ -79,43 +52,21 @@ def extract_lab_values(report_text):
     return values[:100]
 
 
-def save_report(uploaded_file, report_name, report_date, extracted_text, lab_values):
-    report_id = str(uuid.uuid4())
-    safe_suffix = Path(uploaded_file.name).suffix.lower() or ".pdf"
-    saved_filename = f"{report_id}{safe_suffix}"
-    destination = REPORT_DIR / saved_filename
-    uploaded_file.seek(0)
-    with destination.open("wb") as output:
-        shutil.copyfileobj(uploaded_file, output)
-
-    with _connection() as connection:
-        connection.execute(
-            """INSERT INTO reports
-            (id, report_name, report_date, original_filename, saved_path, extracted_text, lab_values, created_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
-            (
-                report_id,
-                report_name.strip(),
-                report_date.isoformat() if isinstance(report_date, date) else str(report_date),
-                uploaded_file.name,
-                str(destination),
-                extracted_text,
-                json.dumps(lab_values),
-                datetime.now().isoformat(timespec="seconds"),
-            ),
-        )
-    return report_id
+def save_report(original_filename, report_name, report_date, lab_values):
+    """Create an in-memory history record without retaining the PDF or its text."""
+    return {
+        "id": str(uuid.uuid4()),
+        "report_name": report_name.strip(),
+        "report_date": report_date.isoformat() if isinstance(report_date, date) else str(report_date),
+        "original_filename": original_filename,
+        "lab_values": lab_values,
+        "created_at": datetime.now().isoformat(timespec="seconds"),
+    }
 
 
-def list_reports():
-    with _connection() as connection:
-        rows = connection.execute("SELECT * FROM reports ORDER BY report_date, created_at").fetchall()
-    reports = []
-    for row in rows:
-        report = dict(row)
-        report["lab_values"] = json.loads(report["lab_values"])
-        reports.append(report)
-    return reports
+def list_reports(reports):
+    """Return the current session's report records in date order."""
+    return sorted(reports, key=lambda report: (report["report_date"], report["created_at"]))
 
 
 def available_tests(reports):

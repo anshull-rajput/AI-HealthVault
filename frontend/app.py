@@ -17,6 +17,11 @@ st.title("🏥 AI HealthVault")
 st.write("Understand your medical report with a simple Generative AI assistant.")
 st.caption("Educational prototype — not a medical diagnosis tool.")
 
+# This list exists only for the active Streamlit browser session. It is never
+# written to a shared database or the deployed server's file system.
+if "saved_reports" not in st.session_state:
+    st.session_state.saved_reports = []
+
 try:
     ai = HealthVaultAI()
 except ValueError:
@@ -48,7 +53,7 @@ if uploaded_file:
     st.success(f"Report loaded: {uploaded_file.name}")
     report = report_text[:9000]
 
-    st.subheader("Save this report to history")
+    st.subheader("Keep this report's lab values for this session")
     extracted_values = extract_lab_values(report_text)
     save_col1, save_col2 = st.columns(2)
     with save_col1:
@@ -63,12 +68,13 @@ if uploaded_file:
             hide_index=True,
         )
     else:
-        st.info("No clear numeric lab values were detected. You can still save the PDF and view it in your history.")
-    if st.button("💾 Save report locally", use_container_width=True):
+        st.info("No clear numeric lab values were detected. You can still add this report's name and date to this session's history.")
+    if st.button("💾 Save to this session", use_container_width=True):
         if report_name.strip():
             try:
-                save_report(uploaded_file, report_name, report_date, report_text, extracted_values)
-                st.success("Saved locally on this computer. Scroll to Saved report history to compare it later.")
+                session_report = save_report(uploaded_file.name, report_name, report_date, extracted_values)
+                st.session_state.saved_reports.append(session_report)
+                st.success("Saved only for this browser session. Scroll to Your saved reports to compare it later.")
             except Exception as exc:
                 st.error(f"Could not save this report: {exc}")
         else:
@@ -136,8 +142,8 @@ REPORT:\n{report}"""
 
 with history_tab:
     st.subheader("Your saved reports")
-    st.caption("Reports are saved locally in this app's data folder on this computer. They are not uploaded to GitHub.")
-    saved_reports = list_reports()
+    st.caption("This history belongs only to your current browser session. No PDF, report text, or history is saved to the server; it clears when the session ends.")
+    saved_reports = list_reports(st.session_state.saved_reports)
     if not saved_reports:
         st.info("No reports saved yet. Upload a PDF above, add a name and date, then save it.")
     else:

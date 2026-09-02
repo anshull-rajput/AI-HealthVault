@@ -17,10 +17,10 @@ st.title("🏥 AI HealthVault")
 st.write("Understand your medical report with a simple Generative AI assistant.")
 st.caption("Educational prototype — not a medical diagnosis tool.")
 
-# This list exists only for the active Streamlit browser session. It is never
-# written to a shared database or the deployed server's file system.
-if "saved_reports" not in st.session_state:
-    st.session_state.saved_reports = []
+# Session-only history: each browser session gets its own private list.
+SESSION_KEY = "healthvault_saved_reports_v2"
+if SESSION_KEY not in st.session_state:
+    st.session_state[SESSION_KEY] = []
 
 try:
     ai = HealthVaultAI()
@@ -73,7 +73,7 @@ if uploaded_file:
         if report_name.strip():
             try:
                 session_report = save_report(uploaded_file.name, report_name, report_date, extracted_values)
-                st.session_state.saved_reports.append(session_report)
+                st.session_state[SESSION_KEY].append(session_report)
                 st.success("Saved only for this browser session. Scroll to Your saved reports to compare it later.")
             except Exception as exc:
                 st.error(f"Could not save this report: {exc}")
@@ -143,7 +143,7 @@ REPORT:\n{report}"""
 with history_tab:
     st.subheader("Your saved reports")
     st.caption("This history belongs only to your current browser session. No PDF, report text, or history is saved to the server; it clears when the session ends.")
-    saved_reports = list_reports(st.session_state.saved_reports)
+    saved_reports = list_reports(st.session_state[SESSION_KEY])
     if not saved_reports:
         st.info("No reports saved yet. Upload a PDF above, add a name and date, then save it.")
     else:

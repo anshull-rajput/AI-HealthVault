@@ -1,168 +1,345 @@
-<div align="center" style="border: 2px solid #ccc; padding: 20px; border-radius: 12px; width: 80%; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.15);">
-    <img
-        width="180"
-        height="220"
-        alt="Logo - SURE ProEd"
-        src="https://github.com/user-attachments/assets/88fa5098-24b1-4ece-87df-95eb920ea721"
-        style="border-radius: 10px;"
-    />
+# 🏥 AI HealthVault
 
-  <h1 align="center" style="font-family: Arial; font-weight: 600; margin-top: 15px;">SURE ProEd (formerly SURE Trust) 
-      </h1>
-<h2 style="color: #2b6cb0; font-family: Arial;">Skill Upgradation for Rural youth Empowerment Trust</h2>
-</div>
+**AI-powered medical report analysis and explanation platform**
 
-<hr style="border: 0; border-top: 1px solid #ccc; width: 80%;" />
+AI HealthVault is a Generative AI application that helps users understand text-based medical reports in simple language. Users can upload a PDF medical report, generate an AI-powered summary, identify important findings, ask questions about the report, and compare detected laboratory values across multiple reports within the current session.
 
-<div style="padding: 20px; border: 2px solid #ddd; border-radius: 12px; width: 90%; margin: auto; background: #fafafa; font-family: Arial;">
-
-<h2 style = "color:#333;"> Student Details </h2>
-<div align = "left" style ="margin: 20px; font-size: 16px;">
-    <p><strong>Name:</strong> Anshul Rajput </p>
-    <p><strong>Email ID:</strong> anshulrajputg6genai@gmail.com </p>
-    <p><strong>College Name:</strong> Chameli Devi Group of Instituion </p>
-    <p><strong>Branch/Specialization :</strong> Computer Science and Engineering </p>
-    <p><strong>College ID:</strong> 0832 </p>
-</div>
-
-<hr style="border: 0; border-top: 1px solid #ccc; width: 80%;" />
-
-<h2 style="color:#333;"> Course Details </h2>
-<div align="left" style="margin: 20px; font-size: 16px;">
-    <p><strong>Course Opted:</strong> Generative AI </p>
-    <p><strong>Instructor Name:</strong> Prof. Radhakumari Challa </p>
-</div>
-<div align="left" style="margin: 20px; font-size: 16px;">
-    <p><strong>Duration:</strong> 6 Month </p>
-
-<hr style="border: 0; border-top: 1px solid #ccc; width: 80%;" />
-
-<h2 style="color:#333;"> Trainer Details </h2>
-<div align="left" style="margin: 20px; font-size: 16px;">
-
-<p><strong>Trainer Name:</strong> Sreekanth Subramanian </p>
-<p><strong>Trainer Email ID:</strong> sreesubu77@gmail.com </p>
-<p><strong>Trainer Designation:</strong> AI Engineer </p>
-
-<hr style="border: 0; border-top: 1px solid #ccc; width: 80%;" />
-
-## **Table of Contents**
-- [Course Learning](#course-learning-to-be-edited-by-student)
-- [Projects Completed](#projects-completed)
-- [Project Introduction](#project-introduction)
-- [Technologies Used](#technologies-used)
-- [Roles and Responsibilities](#roles-and-responsibilities)
-- [Project Report](#project-report)
-- [Learnings from LST & SST](#learnings-from-lst--sst)
-- [Community Services](#community-services)
-- [Certificate](#certificate)
-- [Acknowledgments](#acknowledgments)
-
-<hr style="border: 0; border-top: 1px solid #ccc; width: 80%;" />
-
-
-## Overall Learning 
-
-During the SURE ProEd Generative AI training, I developed a practical understanding of Generative AI concepts and their application in real-world projects. I gained hands-on experience with AI models, prompt-based applications, LangChain, Google Colab, API integration,RAG , documentation, LLM, and project presentation.
-
-
-<h2 style="color:#333;"> Projects Completed </h2>
-<div align="left" style="margin: 20px; font-size: 16px;">
-
-<p><strong><a href="#project1">Project :</a></strong> &lt; AI HealthVault &gt;</p>
-
-AI HealthVault is an AI-powered medical report analysis platform. It extracts information from uploaded PDF reports, generates AI-based summaries and findings, answers questions about reports, and compares detected lab values over time.
-
-</div>
-
-<!-- Project 1 -->
-<h3 id="project1">Project : AI HealthVault </h3>
-<p>
-  This project involved designing and developing a basic functional module using the core concepts taught in the course.
-  It focused on understanding requirements, creating structured code, and implementing key features.
-</p>
-<p>
-  <a href="https://github.com/sure-trust/ANSHUL-RAJPUT-g6-gen-ai/tree/main/Final%20capstone%20project" target="_blank"><strong>→ View Full Project Report</strong></a>
-</p>
-
-
-  The final project showcased the practical application of all concepts learned throughout the course.  
-  It required planning, building, optimizing, and documenting a complete real-world project.
-</p>
-
-<hr style="height:1px; border-top:1px solid #ccc; width:80%;" />
-
-
-## **References**
-
-- [Wikipedia](https://ai-healthvault-2aqxa4mwhvxgo2auwaet36.streamlit.app/)
-<!--you can add refrences over here in same syntax as above -->
----
-
-
-## **Learnings from LST and SST**
-
-LST and SST sessions helped me improve both technical and professional
-skills. I learned how to approach problems systematically, communicate
-ideas clearly, work with others, take responsibility for assigned tasks,
-and apply learning to practical situations. These sessions also improved
-my confidence in presenting and explaining my work.
+> ⚠️ **Disclaimer:** AI HealthVault is an educational project. It does not provide medical diagnosis or treatment advice. Medical results should always be interpreted by a qualified healthcare professional.
 
 ---
 
-## **Community Services**
+## ✨ Features
 
-As part of the SURE ProEd internship requirements, I participated in
-community-oriented activities including tree plantation and helping senior citizens.
+- 📄 **PDF Medical Report Upload**
+  - Upload text-based medical reports in PDF format.
+  - Extract readable report content using PyPDF.
 
-### **Activities Involved**  
- <!-- add the location where you have panted -->
-- **Tree Plantation Drive** – Participated by planting trees and contributing to environmental improvement.
+- 🤖 **AI-Powered Summary**
+  - Generates a simplified summary of the uploaded report.
+  - Highlights important information without intentionally inventing values.
 
-  <!-- add the location where you helped -->
-- **Helping Elder Citizens** – Assisted two elderly individuals with simple daily tasks and provided support where needed. 
+- 🔎 **Important Findings**
+  - Presents key points from the report in easy-to-understand language.
 
-<!-- you can write impacts according to your experience in your words-->
+- 💬 **Ask Questions About Your Report**
+  - Ask questions using natural language.
+  - Answers are generated using the uploaded report as context.
 
-### **Impact / Contribution**
+- 🧪 **Laboratory Value Extraction**
+  - Detects likely numerical laboratory measurements.
+  - Displays test names, values, and units.
 
-- Helped create a supportive environment during the blood donation camp. <!-- add the location where you given -->
-- Actively participated in promoting a greener and cleaner surroundings.
-- Offered personal assistance to elder citizens, strengthening community bonds.
-- Improved skills in communication, coordination, and social responsibility.
+- 📊 **Report Comparison**
+  - Save multiple reports during the current session.
+  - Compare detected laboratory values across reports.
+  - Shows numerical changes between results.
 
-### **Photos**
+- 🔐 **Session-Based Privacy**
+  - Report history is kept in the current Streamlit session.
+  - No database is used for report history.
 
-<!-- add your photos below -->
-<!-- change url below with your image urls (inside  src='')-->
-
-- These are just placeholder (sample) images <!-- remove this line -->
-
-<div align="center">
-
-<img src="./1001127513.png" alt="Community Service Activities" width="48%">
-
-<img src="./1001127512.png" alt="Community Interaction Activities" width="48%">
-
-</div>
+- 🖥️ **Interactive Web Interface**
+  - Built with Streamlit.
 
 ---
 
-## **Certificate**
+## 🧠 How It Works
 
-The internship certificate serves as an official acknowledgment of the successful completion of my training period. It will be issued by the organization upon fulfilling all required tasks and meeting the performance expectations of the program. The certificate validates the skills, experience, and contributions made during the internship.
-
-<!-- add your certificate image url below (inside src='')-->
-
-<p align="center">
-<img src="https://github.com/Lord-Rahul/Practice-Programs/blob/main/react/1/public/Gemini_Generated_Image_a6w8rda6w8rda6w8.png?raw=true" alt="Internship Certificate" width="80%">
-</p>
+```
+                 ┌─────────────────────┐
+                 │   Upload PDF Report │
+                 └──────────┬──────────┘
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │   PDF Text Extract  │
+                 │       PyPDF         │
+                 └──────────┬──────────┘
+                            │
+                 ┌──────────┴──────────┐
+                 ▼                     ▼
+       ┌──────────────────┐   ┌──────────────────┐
+       │  Report Content  │   │  Lab Value       │
+       │                  │   │  Extraction      │
+       └────────┬─────────┘   └────────┬─────────┘
+                │                      │
+                ▼                      ▼
+       ┌──────────────────┐   ┌──────────────────┐
+       │   Groq LLM       │   │ Session History  │
+       │   AI Analysis    │   │ & Comparison     │
+       └────────┬─────────┘   └────────┬─────────┘
+                │                      │
+                ▼                      ▼
+       ┌──────────────────┐   ┌──────────────────┐
+       │ Summary / Q&A /  │   │ Trend & Numeric  │
+       │ Important Points │   │ Comparison       │
+       └──────────────────┘   └──────────────────┘
+```
 
 ---
 
-## **Acknowledgments**
+## 🏗️ Project Architecture
 
-<!-- you can add Acknowledgments over here in same syntax as below . eg trainer name , company name , role etc -->
+```
+AI-HealthVault/
+│
+├── frontend/
+│   └── app.py
+│
+├── backend/
+│   ├── ai_service.py
+│   └── report_store.py
+│
+├── .streamlit/
+│   └── config.toml
+│
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
 
-- [Prof. Radhakumari Challa](https://www.linkedin.com/in/prof-radhakumari-challa-a3850219b) , Executive Director and Founder - [SURE Trust](https://www.suretrustforruralyouth.com/)
+### Main Components
 
+**Frontend — `frontend/app.py`**
+
+Handles the Streamlit interface, PDF upload, text extraction, AI interactions, session history, and laboratory comparison.
+
+**AI Service — `backend/ai_service.py`**
+
+Handles communication with the Groq-hosted LLM and applies instructions to keep responses focused on explaining the supplied report rather than diagnosing or prescribing treatment.
+
+**Report Store — `backend/report_store.py`**
+
+Handles laboratory value extraction, test-name normalization, session report records, and numerical comparison.
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| **Python** | Core application logic |
+| **Streamlit** | Web interface |
+| **Groq** | LLM API |
+| **OpenAI GPT-OSS 120B via Groq** | Generative AI |
+| **PyPDF** | PDF text extraction |
+| **Python Regex** | Laboratory value extraction |
+| **python-dotenv** | Environment configuration |
+
+---
+
+## 🤖 Generative AI
+
+AI HealthVault uses a Groq-hosted large language model for report summaries, important findings, and question answering.
+
+The application uses prompts designed to:
+
+- Explain medical information in simple language.
+- Use the supplied report as the source of information.
+- Avoid intentionally inventing values.
+- Avoid medical diagnosis.
+- Avoid prescribing medication.
+- State when required information is not available.
+
+### AI Use Cases
+
+**Report Summary**
+- Report overview
+- Key findings
+- Values outside reference range when explicitly shown
+- Questions to discuss with a healthcare professional
+
+**Important Findings**
+- Identifies important information from the report.
+
+**Question Answering**
+- Uses the uploaded report text as context to answer user questions.
+
+---
+
+## 🧪 Laboratory Value Extraction
+
+AI HealthVault includes a lightweight rule-based extraction system.
+
+The application:
+
+1. Extracts text from the PDF.
+2. Processes the report line by line.
+3. Uses regular expressions to identify likely test names, numerical values, and units.
+4. Normalizes detected test names.
+5. Stores detected values in the current session.
+6. Allows matching tests to be compared across reports.
+
+This is a prototype approach. Real-world medical documents can have many different layouts and formats, so a production system would require more robust document parsing and validation.
+
+---
+
+## 📊 Report Comparison
+
+Users can save multiple reports during their current session.
+
+For a test detected in multiple reports, the application shows:
+
+```
+Earlier Result
+      ↓
+Latest Result
+      ↓
+Numerical Difference
+```
+
+The application presents the numerical difference rather than making a medical conclusion.
+
+Different laboratories may use different reference ranges, units, and measurement methods, so numerical comparison should not be treated as medical interpretation.
+
+---
+
+## 🔐 Privacy & Data Handling
+
+AI HealthVault is designed as a session-based prototype.
+
+- Uploaded report content is processed during the current session.
+- Report history is maintained in Streamlit session state.
+- No database is used for report history.
+- API credentials should be stored in environment variables.
+- Sensitive medical documents should only be used with trusted deployments.
+
+A production system would require stronger security controls such as authentication, access control, encryption, audit logging, and appropriate privacy/compliance measures.
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/anshull-rajput/AI-HealthVault.git
+cd AI-HealthVault
+```
+
+### 2. Create a virtual environment
+
+```bash
+python -m venv venv
+```
+
+**Windows**
+```bash
+venv\Scripts\activate
+```
+
+**macOS / Linux**
+```bash
+source venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure the API key
+
+Create a `.env` file in the project root:
+
+```env
+GROQ_API_KEY=your_groq_api_key
+GROQ_MODEL=openai/gpt-oss-120b
+```
+
+**Never commit your API key to GitHub.**
+
+### 5. Run the application
+
+```bash
+streamlit run frontend/app.py
+```
+
+---
+
+## 📸 Application Preview
+
+Recommended screenshots to add:
+
+1. Dashboard / PDF upload
+2. AI Summary
+3. Important Findings
+4. Ask AI section
+5. Laboratory value extraction
+6. Report comparison
+
+Example:
+
+```markdown
+![AI HealthVault Dashboard](./screenshots/dashboard.png)
+```
+
+---
+
+## 🎯 Project Objectives
+
+- Make medical reports easier to understand.
+- Demonstrate a practical Generative AI application.
+- Combine PDF processing with LLM-based analysis.
+- Extract structured information from unstructured report text.
+- Provide simple numerical comparison between reports.
+- Demonstrate responsible AI behavior by avoiding diagnosis and treatment recommendations.
+
+---
+
+## ⚠️ Current Limitations
+
+- Supports text-based PDFs; scanned/image-only PDFs may not work.
+- Laboratory extraction uses rule-based pattern matching.
+- Medical terminology interpretation depends on the LLM.
+- No authentication system is implemented.
+- No persistent database is used.
+- No OCR pipeline is currently included.
+- The application should not be used for medical diagnosis or treatment decisions.
+
+---
+
+## 🔮 Future Improvements
+
+- 🔐 User authentication and secure accounts
+- 🗄️ Secure database integration
+- 🖼️ OCR support for scanned reports
+- 🧪 More robust medical test extraction
+- 📈 Interactive laboratory trend charts
+- 🔎 Retrieval-Augmented Generation (RAG)
+- 🌐 Multilingual report explanations
+- 🛡️ Stronger privacy and security controls
+- 📊 Improved report analytics
+- ☁️ Production-grade deployment architecture
+
+---
+
+## 💡 What I Learned
+
+Through this project, I gained practical experience with:
+
+- Generative AI application development
+- LLM API integration
+- Prompt engineering
+- PDF document processing
+- Text extraction
+- Regular-expression-based data extraction
+- Streamlit application development
+- Session-state management
+- Responsible AI considerations
+- Project documentation and deployment
+
+---
+
+## 👨‍💻 Author
+
+**Anshul Rajput**
+
+B.Tech — Computer Science & Engineering
+
+---
+
+## 📄 License
+
+This project is created for educational and demonstration purposes.

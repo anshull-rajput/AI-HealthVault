@@ -244,7 +244,7 @@ pip install -r requirements.txt
 Create a `.env` file in the project root:
 
 ```env
-GROQ_API_KEY=your_groq_api_key
+GROQ_API_KEY=<YOUR_GROQ_API_KEY>
 GROQ_MODEL=openai/gpt-oss-120b
 ```
 

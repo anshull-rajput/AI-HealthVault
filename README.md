@@ -260,20 +260,29 @@ streamlit run frontend/app.py
 
 ## 📸 Application Preview
 
-Recommended screenshots to add:
+Here are screenshots of the main AI HealthVault features:
 
-1. Dashboard / PDF upload
-2. AI Summary
-3. Important Findings
-4. Ask AI section
-5. Laboratory value extraction
-6. Report comparison
+### 🖥️ Dashboard & PDF Upload
 
-Example:
+![AI HealthVault Dashboard](./Image/IMG-20260918-WA0007.jpg)
 
-```markdown
-![AI HealthVault Dashboard](./screenshots/dashboard.png)
-```
+### 🤖 AI Summary
+
+![AI HealthVault AI Summary](./Image/IMG-20260918-WA0008.jpg)
+
+### 🔎 Important Findings
+
+![AI HealthVault Important Findings](./Image/IMG-20260918-WA0009.jpg)
+
+### 💬 Ask AI About Your Report
+
+![AI HealthVault Ask AI](./Image/IMG-20260918-WA0010.jpg)
+
+### 📊 Report History & Session Data
+
+![AI HealthVault Report History](./Image/IMG-20260918-WA0011.jpg)
+
+> **Note:** Screenshots are provided for demonstrating the application's interface and features.
 
 ---
 
